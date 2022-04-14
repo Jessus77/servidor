@@ -1,0 +1,36 @@
+blink en terminal de python 
+import RPi.GPIO as GPIO
+import time
+pin=7
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(pin, GPIO.OUT)
+GPIO.OUTPUT(pin, GPIO.HIGH)
+for i in range (0,30)//prendera y apagara el led durante 30 veces por cada segundo
+GPIO.output(pin, GPIO.HIGH)
+time.sleep(1)
+GPIO.output(pin, GPIO.LOW)
+time.sleep(1)
+GPIO.cleanup()
+_________________________________________________________________________
+en la terminal de java 
+public class blink 
+{
+    public static void main (String args [])
+    {
+        System.out.println("Press CTRL-C to exit");
+        try {
+            Runtime runTime= Runtime.getRuntime();
+            runTime.exec("gpio mode 12 out");
+            while (true)
+                {
+                runTime.exec("gpio write 12 1");
+                Thread.sleep(300);
+                runTime.exec("gpio write 12 0");
+                Thread.sleep(300);
+                System.out.println("led ");
+                }
+            } catch (Exception e) {
+                        System.out.println("Exception occured: " + e.getMessage());
+                                    }
+    }
+}

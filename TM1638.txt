@@ -1,0 +1,101 @@
+#include <LiquidCrystal.h>
+#include <TM1638lite.h> 
+
+int rs = 12;
+
+int e = 11;
+
+int d4 = 5;
+
+int d5 = 4;
+
+int d6 = 3;
+
+int d7 = 2;
+
+int numero = 0;
+
+
+LiquidCrystal lcd(rs, e, d4, d5, d6, d7);
+
+TM1638lite tm(7, 8, 9);
+
+void setup() {
+  // initialize digital pin LED_BUILTIN as an output.
+  
+pinMode(LED_BUILTIN, OUTPUT);
+  
+lcd.begin(16, 2);
+tm.reset();
+
+
+ tm.displayText("12345678");
+}
+
+// the loop function runs over and over again forever
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);   
+// turn the LED on (HIGH is the voltage level)
+  delay(1000);           
+    // wait for a second
+  digitalWrite(LED_BUILTIN, LOW); 
+   // turn the LED off by making the voltage LOW
+  delay(1000);                    
+   // wait for a second
+  lcd.setCursor(0, 0);
+  
+lcd.print("Hola mundo");
+ 
+}
+____________________________________________________
+en la raspberry
+sudo apt-get update
+sudo apt-get upgrade
+git clone https://github.com/thilaire/rpi-TM1638
+cd rpi-TM1638
+sudo python setup.py install
+# Programa: TM1638 com Raspberry Pi
+# Autor: Arduino e Cia
+
+# Carrega bibliotecas
+from time import sleep
+from rpi_TM1638 import TMBoards
+
+# Definicoes da GPIO
+DIO = 21
+CLK = 20
+STB = 16, 26
+
+# Cria instancia
+TM = TMBoards(DIO, CLK, STB, 0)
+
+TM.clearDisplay()
+
+# Exemplo leds. Liga o 1o, 3o. e ultimo leds
+TM.leds[0] = True       
+TM.leds[2] = True      
+TM.leds[7] = True
+
+# Exemplo numeros. Mostra o numero 1.234 nos 4 primeiros displays
+TM.segments[0] = '1.234'
+
+# Exemplo numeros. Mostra o numero 5 nos 5o display
+TM.segments[4] = '5'
+
+# Exemplo segmentos 
+# Acende os segmentos 0, 1, 2, 4, 5 e 6 no display 7
+TM.segments[6,0] = True
+TM.segments[6,1] = True
+TM.segments[6,2] = True
+TM.segments[6,4] = True
+TM.segments[6,5] = True
+TM.segments[6,6] = True
+
+while 1:
+    for i in range(6):
+        TM.segments[7,i] = True
+        sleep(0.2)
+        TM.segments[7,i] = False
+        sleep(0.2)
+///nombre del programa 
+sudo python testetm1638.py
